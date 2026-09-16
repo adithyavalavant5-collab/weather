@@ -1,0 +1,31 @@
+LIVE MAP COLOUR + CURRENT WEATHER ACCURACY FIX
+=============================================
+
+1. Visible measurement colour field
+- Temperature, rain, wind and alert/risk layers now paint semi-transparent colour zones directly on the Leaflet map.
+- City/location dots still show exact sampled values and remain clickable.
+- The selected location gets a stronger coloured ring using its own current weather value.
+- The legend and the map use the same thresholds/colour functions.
+
+2. Exact GPS weather
+- "Use current location" no longer snaps weather requests to the nearest bundled city.
+- It uses the browser/device latitude and longitude directly (6 decimal places).
+- If geolocation permission is already granted, the app automatically uses the exact GPS point on startup instead of defaulting to Dindigul.
+- Nearest known place is used only for state/district text.
+
+3. Better live-provider consistency
+- Open-Meteo is explicitly requested with models=best_match and land cell selection.
+- Temperature, feels-like, wind and gust values keep one decimal instead of being rounded to whole numbers.
+- Demo WebSocket risk updates no longer overwrite the real-provider risk widgets when real weather is active.
+- Header now reports LIVE WEATHER when the real weather provider is active.
+
+4. Live sync
+- Selected-location forecast refresh: 60 seconds.
+- Nationwide colour map refresh: 60 seconds.
+- State risk map refresh: 60 seconds.
+- Server weather cache: 30 seconds.
+- Nationwide map cache: 45 seconds.
+- Returning to the browser tab or reconnecting to the network triggers an immediate refresh.
+
+5. Important accuracy note
+Open-Meteo "current" conditions are weather-model current conditions. They are not a physical sensor reading at the phone itself. The app now uses the exact requested/GPS coordinate and always shows the provider observation time. Different weather apps/providers can still report slightly different values because they use different models, stations, update times and spatial grids.

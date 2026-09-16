@@ -1,0 +1,37 @@
+REAL-TIME WEATHER + MAP COLOUR FIX
+==================================
+
+What changed
+------------
+1. Live Leaflet map colours
+   - Every bundled India map point now receives current weather in batched Open-Meteo requests.
+   - Temperature, Rainfall, Wind and Risk / Alerts each use their own live colour scale.
+   - Risk / Alerts now draws visible colour halos for ALL live risk levels (Low through Extreme), not just high-risk points.
+   - Tooltips show the actual live layer value and provider observation time.
+
+2. Original India Risk Map
+   - The old state-level map no longer uses fake/simulated risk colours while Real API mode is active.
+   - It aggregates current live location samples for each state and colours the state tiles from those values.
+   - Risk, Rainfall, Lightning and Flood layers now have layer-specific legends and layer-specific colours.
+   - Hover cards show current weather-derived risk, average temperature, current rain, wind/gust and provider time.
+   - If live data is unavailable, Real API mode keeps last-good data or shows neutral grey instead of pretending simulator data is live.
+
+3. Current weather synchronization
+   - Real API is the default data source (.env).
+   - Selected-location weather and nationwide map data auto-refresh every 2 minutes.
+   - Forecast cache TTL reduced to 1 minute.
+   - Open-Meteo provider timeout increased and one retry added.
+   - Current precipitation probability / UV / visibility are taken from the hourly sample nearest the provider's current timestamp instead of the first hour of the day.
+
+4. Dashboard synchronization
+   - Current Weather, Hazard Scores, 6-hour Timeline, Warning Card and Recommended Actions consume the same selected-location real forecast whenever it is available.
+   - The simulator is retained only as a clearly labelled fallback/demo path.
+
+5. Transparency
+   - Hybrid-data banner wording updated so simulated ingestion is not confused with live weather.
+   - Simulator fallback is visibly identified while connecting or when the real provider is unavailable.
+
+Notes
+-----
+- The risk score shown on the map is a transparent app heuristic derived from current temperature, precipitation, wind/gust and WMO weather code. It is NOT an official IMD warning classification.
+- Open-Meteo current weather is provider/model data. The app displays its provider timestamp and does not claim it is a local weather-station measurement.

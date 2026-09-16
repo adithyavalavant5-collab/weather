@@ -1,0 +1,11 @@
+{
+  "name": "weather-simulator",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "bun index.ts"
+  },
+  "dependencies": {
+    "socket.io": "^4.8.1"
+  }
+}

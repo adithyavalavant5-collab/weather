@@ -1,0 +1,34 @@
+Weather Early Warning System - Loading + Map Stability Fix
+
+Fixes included:
+1. Leaflet map now stays inside its card / stacking context and no longer overlays the location selector.
+2. Added Leaflet ResizeObserver + invalidateSize handling to prevent blank, shifted, or mis-sized maps after layout changes.
+3. Added automatic map-tile fallback from OpenStreetMap to CARTO if the primary tile source fails.
+4. Removed the startup fan-out that fetched weather for 30 cities one-by-one. This was causing long loading times and upstream API pressure.
+5. Removed duplicate automatic weather fetch loops from nested components. Only the top-level live-weather section now performs automatic refreshes.
+6. Forecast is fetched first; alerts are best-effort afterward, so alert delays can no longer keep the whole weather UI stuck in Loading.
+7. Added client request timeouts and reduced Open-Meteo server timeout so the built-in simulator fallback appears quickly if the live API is unavailable.
+8. Fixed the missing RealWeatherAlert type import in the client map module.
+9. Fixed npm scripts for Windows: `npm run dev` now works without the Linux-only `tee` command.
+
+Run on Windows:
+  npm install
+  npm run dev
+
+Open:
+  http://localhost:3000
+
+If port 3000 is already occupied, stop the old dev server first with Ctrl+C.
+
+
+INDIA-WIDE LOCATION + WEATHER UPGRADE
+=====================================
+- The map now renders every bundled city/district-HQ point instead of only the first 30.
+- Bundled points use Leaflet Canvas CircleMarkers to reduce DOM load on mobile/low-end devices.
+- The location search now augments bundled results with Open-Meteo Geocoding filtered to India (countryCode=IN).
+- Search can resolve many more Indian cities, towns, villages and postal-code indexed places.
+- Selecting any search result recenters the map and triggers weather using its exact latitude/longitude.
+- Remote-only search results still appear on the map through the selected-location marker.
+- Weather remains on-demand; the app does NOT make hundreds of forecast calls at startup.
+- Open-Meteo weather timeout increased from 4.5s to 12s to reduce false timeout fallbacks on slower networks.
+- Fixed Open-Meteo provider configured flag to expose the expected boolean value.

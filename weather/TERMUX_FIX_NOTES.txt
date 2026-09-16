@@ -1,0 +1,23 @@
+TERMUX / LOADING FIX — 2026-09-16
+
+What was changed:
+1. npm run dev now forces Webpack: next dev --webpack -p 3000.
+   Turbopack is not supported on Android/arm64 Termux.
+2. Removed the unnecessary OUTER dynamic import around LiveWeatherMap.
+   There is now only one client-only dynamic boundary: the Leaflet component itself.
+   This avoids nested on-demand chunks that can take a very long time to compile on Android.
+3. Added an instant local weather fallback for the selected location.
+   The dashboard displays useful weather immediately while the real API route compiles/fetches.
+   Real Open-Meteo data replaces it automatically when available.
+4. Increased first-request timeouts for slow Android/Next.js development compilation.
+5. Added a lightweight OpenStreetMap iframe fallback if the full interactive Leaflet bundle
+   is still compiling after 3.5 seconds.
+6. Kept the original map stacking-context fix so Leaflet cannot overlap the location dialog.
+7. Automatic weather fetching remains centralized to avoid duplicate request storms.
+
+Run in Termux:
+  cd ~/weather_app
+  npm run dev
+
+Then open:
+  http://localhost:3000
